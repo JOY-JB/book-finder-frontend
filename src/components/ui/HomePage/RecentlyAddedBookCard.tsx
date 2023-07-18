@@ -22,13 +22,22 @@ const RecentlyAddedBookCard = ({ book }: IProps) => {
     return wishlist.some((wishlistBook) => wishlistBook._id === book._id);
   };
 
+  const truncateString = (text: string, maxLength: number) => {
+    if (text.length > maxLength) {
+      return text.substring(0, maxLength) + "...";
+    }
+    return text;
+  };
+
   return (
     <div
       key={book._id}
       className="bg-gray-100 shadow-lg rounded-md overflow-hidden transition duration-300 transform hover:scale-105"
     >
       <div className="p-4">
-        <h3 className="text-xl font-semibold mb-2">{book.title}</h3>
+        <h3 className="text-xl font-semibold mb-2">
+          {truncateString(book.title, 25)}
+        </h3>
         <p className="text-gray-600 text-sm">Author: {book.author}</p>
         <p className="text-gray-600 text-sm">Genre: {book.genre}</p>
         <p className="text-gray-600 text-sm">

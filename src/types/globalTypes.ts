@@ -5,3 +5,10 @@ export interface IBook {
   genre: string;
   publicationDate: string;
 }
+
+export interface IApiResponse {
+  statusCode: number;
+  success: boolean;
+  message: string;
+  data: any;
+}

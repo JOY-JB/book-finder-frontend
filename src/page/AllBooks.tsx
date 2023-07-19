@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import RecentlyAddedBookCard from "../components/ui/HomePage/RecentlyAddedBookCard";
 import Footer from "../components/ui/common/Footer";
 import Header from "../components/ui/common/Header";

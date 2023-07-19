@@ -1,6 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from "react";
-import Footer from "../components/ui/common/Footer";
-import Header from "../components/ui/common/Header";
+import toast from "react-hot-toast";
+import { createUser } from "../redux/features/user/userSlice";
+import { useAppDispatch, useAppSelector } from "../redux/hook";
 
 interface FormData {
   name: string;
@@ -25,23 +26,40 @@ const SignUp = () => {
     }));
   };
 
+  const dispatch = useAppDispatch();
+  const { isError, error } = useAppSelector((state) => state.user);
+
+  const blankData = {
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  };
+
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    // Perform signup logic with formData
-    // e.g., send form data to an API or perform validation
-    console.log(formData);
-    // Reset form after submission
-    setFormData({
-      name: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-    });
+
+    if (formData.password !== formData.confirmPassword) {
+      toast.error("Password and Confirm Password does't matched. Try again!");
+    } else if (formData.password.length < 6) {
+      toast.error("Password must be minimum 6 character");
+    } else if (isError) {
+      toast.error(error);
+      // reset form data
+      setFormData(blankData);
+    } else {
+      dispatch(
+        createUser({ email: formData.email, password: formData.password })
+      );
+
+      toast.success("User Created Successfully!");
+      // Reset form after submission
+      setFormData(blankData);
+    }
   };
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
-      <Header />
       <div className="items-center justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
@@ -139,7 +157,6 @@ const SignUp = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

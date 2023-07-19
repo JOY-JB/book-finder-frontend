@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 
 import RecentlyAddedBookCard from "../components/ui/HomePage/RecentlyAddedBookCard";
-import Footer from "../components/ui/common/Footer";
-import Header from "../components/ui/common/Header";
 import { useGetBooksQuery } from "../redux/api/apiSlice";
 import { IBook } from "../types/globalTypes";
 
@@ -31,7 +29,6 @@ function Home() {
 
   return (
     <div>
-      <Header />
       {isLoading && !topRecentlyAddedBooks ? (
         <div className="flex items-center justify-center mt-20">
           <div className="animate-spin rounded-full h-36 w-36 border-b-2 border-gray-900"></div>
@@ -54,7 +51,6 @@ function Home() {
           </div>
         </div>
       )}
-      <Footer />
     </div>
   );
 }

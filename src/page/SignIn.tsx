@@ -1,7 +1,8 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
-import Footer from "../components/ui/common/Footer";
-import Header from "../components/ui/common/Header";
+import { loginUser } from "../redux/features/user/userSlice";
+import { useAppDispatch, useAppSelector } from "../redux/hook";
 
 interface FormData {
   email: string;
@@ -9,6 +10,7 @@ interface FormData {
 }
 
 const SignIn = () => {
+  const [loginSuccess, setLoginSuccess] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     email: "",
     password: "",
@@ -22,21 +24,44 @@ const SignIn = () => {
     }));
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const dispatch = useAppDispatch();
+  const { user, isLoading, isError, error } = useAppSelector(
+    (state) => state.user
+  );
+
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    // Perform sign-in logic with formData
-    // e.g., send form data to an API or perform validation
+
     console.log(formData);
-    // Reset form after submission
-    setFormData({
-      email: "",
-      password: "",
-    });
+
+    if (formData.password.length < 6) {
+      toast.error("Password must be minimum 6 characters");
+    } else {
+      await dispatch(loginUser(formData));
+
+      setLoginSuccess(true);
+    }
   };
+
+  useEffect(() => {
+    if (!isLoading && !isError && loginSuccess) {
+      // If login is successful, reset form after submission
+      setFormData({
+        email: "",
+        password: "",
+      });
+
+      toast.success("User Logged in Successfully!");
+      // Reset loginSuccess state after showing the toast
+      setLoginSuccess(false);
+    } else if (!isLoading && isError && error) {
+      // Handle login errors
+      toast.error(error);
+    }
+  }, [isLoading, isError, loginSuccess]);
 
   return (
     <div className="flex-grow min-h-screen flex flex-col bg-gray-100">
-      <Header />
       <div className="flex flex-col items-center justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
@@ -102,19 +127,10 @@ const SignIn = () => {
                   </Link>
                 </div>
               </div>
-              <div className="mt-6">
-                <button
-                  type="button"
-                  className="w-full flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
-                >
-                  Sign in with Google
-                </button>
-              </div>
             </form>
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

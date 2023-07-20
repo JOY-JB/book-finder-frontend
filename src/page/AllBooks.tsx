@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import RecentlyAddedBookCard from "../components/ui/HomePage/RecentlyAddedBookCard";
-import { useGetBooksQuery } from "../redux/api/apiSlice";
+import { useGetBooksQuery } from "../redux/features/books/bookApi";
 import { IBook } from "../types/globalTypes";
 
 const AllBooks = () => {

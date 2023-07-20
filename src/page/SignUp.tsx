@@ -1,5 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import toast from "react-hot-toast";
+import { usePostUserMutation } from "../redux/features/user/userApi";
 import { createUser } from "../redux/features/user/userSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hook";
 
@@ -28,6 +29,7 @@ const SignUp = () => {
 
   const dispatch = useAppDispatch();
   const { isError, error } = useAppSelector((state) => state.user);
+  const [postUser] = usePostUserMutation();
 
   const blankData = {
     name: "",
@@ -51,6 +53,12 @@ const SignUp = () => {
       dispatch(
         createUser({ email: formData.email, password: formData.password })
       );
+
+      postUser({
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
+      });
 
       toast.success("User Created Successfully!");
       // Reset form after submission

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import RecentlyAddedBookCard from "../components/ui/HomePage/RecentlyAddedBookCard";
+import BookCard from "../components/ui/HomePage/BookCard";
 import { useGetBooksQuery } from "../redux/features/books/bookApi";
 import { IBook } from "../types/globalTypes";
 
@@ -45,7 +45,7 @@ function Home() {
           {/* list of the top 10 recently added books */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {topRecentlyAddedBooks?.map((book) => (
-              <RecentlyAddedBookCard book={book} key={book._id} />
+              <BookCard book={book} key={book._id} />
             ))}
           </div>
         </div>

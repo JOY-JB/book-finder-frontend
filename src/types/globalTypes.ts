@@ -6,6 +6,13 @@ export interface IBook {
   publicationDate: string;
 }
 
+export interface IReview {
+  // id: number; // Unique identifier for the review
+  comment: string;
+  userId: number;
+  bookId: number;
+}
+
 export interface IApiResponse {
   statusCode: number;
   success: boolean;

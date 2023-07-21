@@ -1,5 +1,5 @@
 export interface IBook {
-  _id: number;
+  _id?: number;
   title: string;
   author: string;
   genre: string;
@@ -7,15 +7,13 @@ export interface IBook {
 }
 
 export interface IReview {
-  // id: number; // Unique identifier for the review
   comment: string;
-  userId: number;
-  bookId: number;
+  userEmail: string;
 }
 
-export interface IApiResponse {
+export interface IApiResponse<Data> {
   statusCode: number;
   success: boolean;
   message: string;
-  data: any;
+  data: Data;
 }

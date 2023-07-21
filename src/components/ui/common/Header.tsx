@@ -18,7 +18,7 @@ const Header = () => {
     <header className="bg-gray-900 text-white py-4 px-6">
       <nav className="flex items-center justify-between container mx-auto">
         <Link to="/" className="flex items-center text-2xl font-bold">
-          <img className="mr-2 h-6 bg-gray-900" src="./book_logo.png" alt="" />
+          <img className="mr-2 h-6 bg-gray-900" src="/book_logo.png" alt="" />
           <span className="align-middle">Book Finder</span>
         </Link>
         <ul className="flex space-x-4">

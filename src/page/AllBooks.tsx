@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import BookCard from "../components/ui/HomePage/BookCard";
-import BookDetails from "../components/ui/common/BookDetails";
+import BookCard from "../components/ui/common/BookCard";
+import Loading from "../components/ui/common/Loading";
 import { useGetBooksQuery } from "../redux/features/books/bookApi";
 import { IBook } from "../types/globalTypes";
 
@@ -59,13 +59,6 @@ const AllBooks = () => {
     }
   }, [isLoading]);
 
-  const [selectedBook, setSelectedBook] = useState<IBook | null>(null);
-
-  // Function to handle book selection
-  const handleBookSelect = (book: IBook) => {
-    setSelectedBook(book);
-  };
-
   return (
     <div className="container mx-auto py-8 mb-12">
       <div className="flex space-x-8 mb-4">
@@ -115,13 +108,11 @@ const AllBooks = () => {
             </Link>
           </div>
           {isLoading ? (
-            <div className="flex items-center justify-center mt-20">
-              <div className="animate-spin rounded-full h-36 w-36 border-b-2 border-gray-900"></div>
-            </div>
+            <Loading />
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               {filteredBooks.map((book) => (
-                <div key={book._id} onClick={() => handleBookSelect(book)}>
+                <div key={book._id}>
                   <BookCard book={book} />
                 </div>
               ))}
@@ -129,11 +120,6 @@ const AllBooks = () => {
           )}
         </div>
       </div>
-      {selectedBook && (
-        <div className="bg-gray-100 rounded-md p-4 shadow-md mt-4">
-          <BookDetails book={selectedBook} />
-        </div>
-      )}
     </div>
   );
 };

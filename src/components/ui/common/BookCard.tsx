@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { IBook } from "../../../types/globalTypes";
 
 interface IProps {
@@ -30,8 +31,8 @@ const BookCard = ({ book }: IProps) => {
   };
 
   return (
-    <div
-      key={book._id}
+    <Link
+      to={`/book/${book._id}`}
       className="bg-gray-100 shadow-lg rounded-md overflow-hidden transition duration-300 transform hover:scale-105"
     >
       <div className="p-4">
@@ -60,7 +61,7 @@ const BookCard = ({ book }: IProps) => {
           {isBookInWishlist(book) ? "Remove from Wishlist" : "Add to Wishlist"}
         </button>
       </div>
-    </div>
+    </Link>
   );
 };
 

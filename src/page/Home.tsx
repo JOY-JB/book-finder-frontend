@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import BookCard from "../components/ui/HomePage/BookCard";
+import BookCard from "../components/ui/common/BookCard";
+import Loading from "../components/ui/common/Loading";
 import { useGetBooksQuery } from "../redux/features/books/bookApi";
 import { IBook } from "../types/globalTypes";
 
@@ -29,9 +30,7 @@ function Home() {
   return (
     <div>
       {isLoading && !topRecentlyAddedBooks ? (
-        <div className="flex items-center justify-center mt-20">
-          <div className="animate-spin rounded-full h-36 w-36 border-b-2 border-gray-900"></div>
-        </div>
+        <Loading />
       ) : (
         <div className="container mx-auto px-4 my-8 mb-16">
           <div className="my-8">

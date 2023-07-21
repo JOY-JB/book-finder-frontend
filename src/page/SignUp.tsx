@@ -28,7 +28,7 @@ const SignUp = () => {
   };
 
   const dispatch = useAppDispatch();
-  const { isError, error } = useAppSelector((state) => state.user);
+  const { isLoading, isError, error } = useAppSelector((state) => state.user);
   const [postUser] = usePostUserMutation();
 
   const blankData = {
@@ -38,18 +38,14 @@ const SignUp = () => {
     confirmPassword: "",
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     if (formData.password !== formData.confirmPassword) {
       toast.error("Password and Confirm Password does't matched. Try again!");
     } else if (formData.password.length < 6) {
       toast.error("Password must be minimum 6 character");
-    } else if (isError) {
-      toast.error(error);
-      // reset form data
-      setFormData(blankData);
-    } else {
+    } else if (!isLoading && !isError) {
       dispatch(
         createUser({ email: formData.email, password: formData.password })
       );
@@ -63,6 +59,10 @@ const SignUp = () => {
       toast.success("User Created Successfully!");
       // Reset form after submission
       setFormData(blankData);
+    } else {
+      toast.error(error);
+      // reset form data
+      // setFormData(blankData);
     }
   };
 

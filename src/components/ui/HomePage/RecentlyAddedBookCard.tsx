@@ -36,7 +36,7 @@ const RecentlyAddedBookCard = ({ book }: IProps) => {
     >
       <div className="p-4">
         <h3 className="text-xl font-semibold mb-2">
-          {truncateString(book.title, 25)}
+          {truncateString(book.title, 23)}
         </h3>
         <p className="text-gray-600 text-sm">Author: {book.author}</p>
         <p className="text-gray-600 text-sm">Genre: {book.genre}</p>

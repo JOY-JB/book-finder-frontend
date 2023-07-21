@@ -4,7 +4,7 @@ const bookApi = api.injectEndpoints({
   endpoints: (builder) => ({
     postUser: builder.mutation({
       query: (data) => ({
-        url: `/user`,
+        url: `user/`,
         method: "POST",
         body: data,
       }),

@@ -1,6 +1,19 @@
+import { signOut } from "firebase/auth";
 import { Link } from "react-router-dom";
+import { auth } from "../../../lib/firebase";
+import { setUser } from "../../../redux/features/user/userSlice";
+import { useAppDispatch, useAppSelector } from "../../../redux/hook";
 
 const Header = () => {
+  const { user, isLoading } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+
+  const handleLogOut = () => {
+    signOut(auth).then(() => {
+      dispatch(setUser(null));
+    });
+  };
+
   return (
     <header className="bg-gray-900 text-white py-4 px-6">
       <nav className="flex items-center justify-between container mx-auto">
@@ -12,12 +25,23 @@ const Header = () => {
           <li>
             <Link to="/all-books">All Books</Link>
           </li>
-          <li>
-            <Link to="/sign-in">Sign In</Link>
-          </li>
-          <li>
-            <Link to="/sign-up">Sign Up</Link>
-          </li>
+
+          {!isLoading && !user.email && (
+            <>
+              <li>
+                <Link to="/sign-in">Sign In</Link>
+              </li>
+              <li>
+                <Link to="/sign-up">Sign Up</Link>
+              </li>
+            </>
+          )}
+
+          {!isLoading && user.email && (
+            <li>
+              <button onClick={handleLogOut}>Logout</button>
+            </li>
+          )}
         </ul>
       </nav>
     </header>

@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../redux/features/user/userSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hook";
 
@@ -29,10 +29,10 @@ const SignIn = () => {
     (state) => state.user
   );
 
+  const navigate = useNavigate();
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-
-    console.log(formData);
 
     if (formData.password.length < 6) {
       toast.error("Password must be minimum 6 characters");
@@ -59,6 +59,12 @@ const SignIn = () => {
       toast.error(error);
     }
   }, [isLoading, isError, loginSuccess]);
+
+  useEffect(() => {
+    if (user.email && !isLoading) {
+      navigate("/");
+    }
+  }, [user.email, isLoading]);
 
   return (
     <div className="flex-grow min-h-screen flex flex-col bg-gray-100">

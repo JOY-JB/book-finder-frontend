@@ -5,7 +5,6 @@ import {
   useUpdateBookMutation,
 } from "../../../redux/features/books/bookApi";
 import { IBook } from "../../../types/globalTypes";
-import BookCard from "./BookCard";
 
 interface FormData {
   title: string;
@@ -181,8 +180,20 @@ const BookData = ({ isUpdate = false, bookData = null }: BookDataProps) => {
 
       <div className="grid grid-cols-1 md:grid-cols-1 gap-8">
         <div className="bg-gray-100 rounded-md p-4 shadow-md">
-          <h2 className="text-xl font-bold">Books Data</h2>
-          <BookCard book={formData} />
+          <h2 className="text-xl font-bold mb-6">Books Data</h2>
+          <div className="bg-white rounded-md p-4 shadow-md">
+            <h3 className="text-xl font-semibold mb-2">{formData.title}</h3>
+            <p className="text-gray-600">
+              <span className="font-semibold">Author:</span> {formData.author}
+            </p>
+            <p className="text-gray-600">
+              <span className="font-semibold">Genre:</span> {formData.genre}
+            </p>
+            <p className="text-gray-600">
+              <span className="font-semibold">Publication Date:</span>{" "}
+              {formData.publicationDate}
+            </p>
+          </div>
         </div>
       </div>
     </div>

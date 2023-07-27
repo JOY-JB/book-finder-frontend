@@ -4,6 +4,7 @@ import {
   usePostBookMutation,
   useUpdateBookMutation,
 } from "../../../redux/features/books/bookApi";
+import { useAppSelector } from "../../../redux/hook";
 import { IBook } from "../../../types/globalTypes";
 
 interface FormData {
@@ -23,6 +24,8 @@ interface BookDataProps {
 }
 
 const BookData = ({ isUpdate = false, bookData = null }: BookDataProps) => {
+  const { user } = useAppSelector((state) => state.user);
+
   const [formData, setFormData] = useState<FormData>({
     title: "",
     author: "",
@@ -74,7 +77,10 @@ const BookData = ({ isUpdate = false, bookData = null }: BookDataProps) => {
         }
       } else {
         // Add a new book
-        const response = (await postBook(formData)) as BookResponse;
+        const response = (await postBook({
+          ...formData,
+          userEmail: user.email,
+        })) as BookResponse;
         if (response.data) {
           toast.success("Book added successfully!");
           // Reset form after successful submission

@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { Link } from "react-router-dom";
 import BookCard from "../components/ui/common/BookCard";
 import Loading from "../components/ui/common/Loading";
@@ -15,26 +15,29 @@ const AllBooks = () => {
   >(null);
 
   let allBooks: IBook[] = [];
-  let genres: string[] = [];
-  let years: string[] = [];
-
   if (!isLoading) {
     allBooks = data?.data;
-    genres = data?.genres || [];
-    years = data?.years || [];
   }
 
-  // Filter books based on search query and selected filters
+  const allGenres = [...new Set(allBooks.map((book) => book.genre))];
+  const allPublicationYears = [
+    ...new Set(allBooks.map((book) => book.publicationDate.substring(0, 4))),
+  ];
+
   const filteredBooks = allBooks?.filter((book) => {
-    const genreMatch = selectedGenre === null || book.genre === selectedGenre;
+    const genreMatch =
+      selectedGenre === null ||
+      book.genre.toLowerCase() === selectedGenre.toLowerCase();
     const publicationYearMatch =
       selectedPublicationYear === null ||
-      book.publicationDate.includes(selectedPublicationYear);
-    return (
-      book.title.toLowerCase().includes(searchQuery.toLowerCase()) &&
-      genreMatch &&
-      publicationYearMatch
-    );
+      book.publicationDate.startsWith(selectedPublicationYear);
+
+    const titleAuthorGenreMatch =
+      book.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      book.author.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      book.genre.toLowerCase().includes(searchQuery.toLowerCase());
+
+    return titleAuthorGenreMatch && genreMatch && publicationYearMatch;
   });
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -48,16 +51,6 @@ const AllBooks = () => {
   const handlePublicationYearChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setSelectedPublicationYear(e.target.value || null);
   };
-
-  useEffect(() => {
-    // Fetch genres and years data from API here (if not already fetched)
-    if (isLoading) {
-      // You can use another API query or Redux action to fetch genres and years data here
-      // For example:
-      // dispatch(fetchGenres());
-      // dispatch(fetchYears());
-    }
-  }, [isLoading]);
 
   return (
     <div className="container mx-auto py-8 mb-12">
@@ -77,7 +70,7 @@ const AllBooks = () => {
             className="block w-full mt-4 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           >
             <option value="">All Genres</option>
-            {genres.map((genre) => (
+            {allGenres.map((genre) => (
               <option key={genre} value={genre}>
                 {genre}
               </option>
@@ -89,7 +82,7 @@ const AllBooks = () => {
             className="block w-full mt-4 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           >
             <option value="">All Years</option>
-            {years.map((year) => (
+            {allPublicationYears.map((year) => (
               <option key={year} value={year}>
                 {year}
               </option>

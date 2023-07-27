@@ -73,28 +73,29 @@ const BookDetails = () => {
           </p>
 
           {/* Edit and Delete Buttons */}
-          <div className="flex justify-end space-x-4">
-            <Link
-              to={`/book/update-book/${id}`}
-              className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
-            >
-              Edit Book
-            </Link>
-            <button
-              className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded"
-              onClick={() => {
-                const shouldDelete = window.confirm(
-                  "Are you sure you want to delete this book?"
-                );
-                if (shouldDelete) {
-                  handleDeleteBook(); // Call the handleDelete function if the user confirms
-                }
-              }}
-            >
-              {isDeleting ? "Deleting..." : "Delete Book"}
-            </button>
-          </div>
-
+          {user.email === book?.userEmail && (
+            <div className="flex justify-end space-x-4">
+              <Link
+                to={`/book/update-book/${id}`}
+                className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
+              >
+                Edit Book
+              </Link>
+              <button
+                className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded"
+                onClick={() => {
+                  const shouldDelete = window.confirm(
+                    "Are you sure you want to delete this book?"
+                  );
+                  if (shouldDelete) {
+                    handleDeleteBook(); // Call the handleDelete function if the user confirms
+                  }
+                }}
+              >
+                {isDeleting ? "Deleting..." : "Delete Book"}
+              </button>
+            </div>
+          )}
           {/* Review Submission Form */}
           {user.email ? (
             <div>

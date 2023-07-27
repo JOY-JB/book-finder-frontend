@@ -1,5 +1,6 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 import { usePostUserMutation } from "../redux/features/user/userApi";
 import { createUser } from "../redux/features/user/userSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hook";
@@ -28,7 +29,9 @@ const SignUp = () => {
   };
 
   const dispatch = useAppDispatch();
-  const { isLoading, isError, error } = useAppSelector((state) => state.user);
+  const { user, isLoading, isError, error } = useAppSelector(
+    (state) => state.user
+  );
   const [postUser] = usePostUserMutation();
 
   const blankData = {
@@ -37,6 +40,7 @@ const SignUp = () => {
     password: "",
     confirmPassword: "",
   };
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -65,6 +69,12 @@ const SignUp = () => {
       // setFormData(blankData);
     }
   };
+
+  useEffect(() => {
+    if (user.email && !isLoading) {
+      navigate("/");
+    }
+  }, [user.email, isLoading, navigate]);
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">

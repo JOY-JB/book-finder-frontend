@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { loginUser } from "../redux/features/user/userSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hook";
 
@@ -29,6 +29,7 @@ const SignIn = () => {
     (state) => state.user
   );
 
+  const location = useLocation();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: FormEvent) => {
@@ -62,9 +63,13 @@ const SignIn = () => {
 
   useEffect(() => {
     if (user.email && !isLoading) {
-      navigate("/");
+      if (location.state?.path) {
+        navigate(location.state.path);
+      } else {
+        navigate("/");
+      }
     }
-  }, [user.email, isLoading]);
+  }, [user.email, isLoading, location.state, navigate]);
 
   return (
     <div className="flex-grow min-h-screen flex flex-col bg-gray-100">

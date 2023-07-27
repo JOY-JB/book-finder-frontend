@@ -38,9 +38,14 @@ const Header = () => {
           )}
 
           {!isLoading && user.email && (
-            <li>
-              <button onClick={handleLogOut}>Logout</button>
-            </li>
+            <>
+              <li>
+                <Link to="/add-new-book">Add New Book</Link>
+              </li>
+              <li>
+                <button onClick={handleLogOut}>Logout</button>
+              </li>
+            </>
           )}
         </ul>
       </nav>

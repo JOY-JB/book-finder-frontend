@@ -1,7 +1,11 @@
 import { api } from "../../api/apiSlice";
 
-const bookApi = api.injectEndpoints({
+const userApi = api.injectEndpoints({
   endpoints: (builder) => ({
+    getUser: builder.query({
+      query: (email) => `user/${email}`,
+      providesTags: ["user"],
+    }),
     postUser: builder.mutation({
       query: (data) => ({
         url: `user/`,
@@ -9,7 +13,28 @@ const bookApi = api.injectEndpoints({
         body: data,
       }),
     }),
+    addToWishlist: builder.mutation({
+      query: ({ bookId, userEmail }) => ({
+        url: `user/wishlist/${bookId}`,
+        method: "POST",
+        body: { userEmail },
+      }),
+      invalidatesTags: ["user"],
+    }),
+    removeFromWishlist: builder.mutation({
+      query: ({ bookId, userEmail }) => ({
+        url: `user/wishlist/${bookId}`,
+        method: "DELETE",
+        body: { userEmail },
+      }),
+      invalidatesTags: ["user"],
+    }),
   }),
 });
 
-export const { usePostUserMutation } = bookApi;
+export const {
+  useGetUserQuery,
+  usePostUserMutation,
+  useAddToWishlistMutation,
+  useRemoveFromWishlistMutation,
+} = userApi;

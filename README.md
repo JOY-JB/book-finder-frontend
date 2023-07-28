@@ -1,6 +1,6 @@
 # Book Finder
 
-Book Finder is a web application that allows users to search for books, add them to their wishlist, and view their wishlist. This repository contains backend code for the application.
+Book Finder is a web application that allows users to search for books, add them to their wishlist, and view their wishlist. This repository contains Frontend code for the application.
 
 ## Live Demo
 

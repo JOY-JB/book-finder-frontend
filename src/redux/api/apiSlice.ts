@@ -6,5 +6,5 @@ export const api = createApi({
     baseUrl: "https://bookfinder-server.vercel.app/api/v1/",
   }),
   tagTypes: ["review", "book", "user"],
-  endpoints: (builder) => ({}),
+  endpoints: () => ({}),
 });

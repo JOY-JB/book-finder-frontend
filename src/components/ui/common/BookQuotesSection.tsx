@@ -3,13 +3,7 @@ import "swiper/css/autoplay";
 import "swiper/css/effect-fade";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import {
-  Autoplay,
-  EffectFade,
-  Navigation,
-  Pagination,
-  Scrollbar,
-} from "swiper/modules";
+import { Autoplay, Navigation, Pagination, Scrollbar } from "swiper/modules";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -49,8 +43,7 @@ const BookQuotesSection = () => {
         </p>
       </div>
       <Swiper
-        modules={[EffectFade, Autoplay, Navigation, Pagination, Scrollbar]}
-        effect="fade"
+        modules={[Autoplay, Navigation, Pagination, Scrollbar]}
         spaceBetween={50}
         slidesPerView={1}
         navigation

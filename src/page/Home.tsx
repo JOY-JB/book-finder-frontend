@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import BookCard from "../components/ui/common/BookCard";
+import BookQuotesSection from "../components/ui/common/BookQuotesSection";
 import HeroSection from "../components/ui/common/HeroSection";
 import Loading from "../components/ui/common/Loading";
 import { useGetBooksQuery } from "../redux/features/books/bookApi";
@@ -51,6 +52,7 @@ function Home() {
               ))}
             </div>
           </div>
+          <BookQuotesSection />
         </div>
       )}
     </div>

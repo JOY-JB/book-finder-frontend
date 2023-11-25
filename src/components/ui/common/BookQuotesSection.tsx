@@ -1,4 +1,16 @@
 import "swiper/css";
+import "swiper/css/autoplay";
+import "swiper/css/effect-fade";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import {
+  Autoplay,
+  EffectFade,
+  Navigation,
+  Pagination,
+  Scrollbar,
+} from "swiper/modules";
+
 import { Swiper, SwiperSlide } from "swiper/react";
 
 const BookQuotesSection = () => {
@@ -37,15 +49,22 @@ const BookQuotesSection = () => {
         </p>
       </div>
       <Swiper
+        modules={[EffectFade, Autoplay, Navigation, Pagination, Scrollbar]}
+        effect="fade"
         spaceBetween={50}
-        slidesPerView={3}
-        scrollbar={{ draggable: true }}
+        slidesPerView={1}
         navigation
         pagination={{ clickable: true }}
+        scrollbar={{ draggable: true }}
+        autoplay={{
+          delay: 2500,
+          pauseOnMouseEnter: true,
+          disableOnInteraction: false,
+        }}
       >
         {quotes.map((quote, index) => (
           <SwiperSlide key={index}>
-            <div className="flex flex-col items-center mx-12 lg:mx-0">
+            <div className="flex flex-col items-center mx-12 lg:mx-0 mb-12">
               <div className="relative text-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

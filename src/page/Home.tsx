@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import BookCard from "../components/ui/common/BookCard";
+import HeroSection from "../components/ui/common/HeroSection";
 import Loading from "../components/ui/common/Loading";
 import { useGetBooksQuery } from "../redux/features/books/bookApi";
 import { IBook } from "../types/globalTypes";
@@ -32,20 +33,23 @@ function Home() {
       {isLoading && !topRecentlyAddedBooks ? (
         <Loading />
       ) : (
-        <div className="container mx-auto px-4 my-8 mb-16">
-          <div className="my-8">
-            <h1 className="text-4xl font-bold mb-4">Book Catalog System</h1>
-            <p className="text-lg text-gray-600">
-              Welcome to the Book Catalog System! Explore the top 10 recently
-              added books below. Add your favorite books to your wishlist.
-            </p>
-          </div>
+        <div>
+          <HeroSection />
+          <div className="container mx-auto px-4 my-8 mb-16">
+            <div className="my-8">
+              <h1 className="text-4xl font-bold mb-4">Book Catalog System</h1>
+              <p className="text-lg text-gray-600">
+                Welcome to the Book Catalog System! Explore the top 10 recently
+                added books below. Add your favorite books to your wishlist.
+              </p>
+            </div>
 
-          {/* list of the top 10 recently added books */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {topRecentlyAddedBooks?.map((book) => (
-              <BookCard book={book} key={book._id} />
-            ))}
+            {/* list of the top 10 recently added books */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {topRecentlyAddedBooks?.map((book) => (
+                <BookCard book={book} key={book._id} />
+              ))}
+            </div>
           </div>
         </div>
       )}

@@ -24,10 +24,12 @@ function App() {
     });
   }, [dispatch]);
   return (
-    <div>
+    <div className="flex flex-col min-h-screen">
       <Toaster position="bottom-right" reverseOrder={false} />
       <Header />
-      <Outlet />
+      <div className="grow">
+        <Outlet />
+      </div>
       <Footer />
     </div>
   );
